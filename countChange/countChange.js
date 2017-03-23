@@ -13,30 +13,80 @@
 // Note:
 // You may assume that you have an infinite number of each kind of coin.
 
+// Greedy implementation
+
+// var coinChange = function(coins, amount) {
+//   coins.sort(function(a,b) {
+//     return a - b;
+//   });
+//   var count = 0;
+//   var addition = 0;
+//   var i = coins.length - 1;
+//   var startIndex = i;
+//   while(addition !== amount) {
+//     if (addition + coins[i] > amount) {
+//       i--;
+//     } else if (i < 0) {
+//       if (startIndex - 1 < 0) {
+//         return -1;
+//       } else {
+//         startIndex--;
+//         addition = 0;
+//         i = startIndex;
+//       }
+//     } else {
+//       addition += coins[i];
+//       count++;
+//     }
+//   }
+//   return count;
+// };
+
+
 var coinChange = function(coins, amount) {
   coins.sort(function(a,b) {
-    return a - b;
+    return b - a;
   });
-  console.log(coins);
-  var count = 0;
-  var addition = 0;
-  var i = coins.length - 1;
-  var startIndex = i;
-  while(addition !== amount) {
-    if (addition + coins[i] > amount) {
-      i--;
-    } else if (i < 0) {
-      if (startIndex - 1 < 0) {
-        return -1;
-      } else {
-        startIndex--;
-        addition = 0;
-        i = startIndex;
+  // keys: number of coins //value: array of coins
+  var cache = {};
+  var makeChange = function(addCoinsArray) {
+    if (addCoinsArray.length > 0) {
+      var result = addCoinsArray.reduce(function(val, accum) {
+        val + accum;
+      }, 0);
+      if (result === amount) {
+        cache[addCoinsArray.length] = addCoinsArray;
+        return;
+      } 
+      if (result > amount) {
+        return;
       }
-    } else {
-      addition += coins[i];
-      count++;
+    }
+    var arrayInput = addCoinsArray;
+    for (var i = 0; i < coins.length; i++) {
+      arrayInput.push(coins[i]);
+      makeChange(arrayInput);
+    }
+
+  }
+
+  makeChange([]);
+
+  for (var i = 0; i <= amount; i++) {
+    if (cache[i]) {
+      return i;
     }
   }
-  return count;
+
+  return -1;
 };
+
+
+
+
+
+
+
+
+
+
