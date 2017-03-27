@@ -11,7 +11,14 @@
 
 // A = [3,2,1,0,4], return false.
 
-var canJump = function(nums) {
-    
+var canJump = function(array) {
+  var jumpTrack = 0;
+  for (var i = 0; i < array.length; i++) {
+    if (i > jumpTrack) {
+      return false;
+    }
+    jumpTrack = Math.max(jumpTrack, i + array[i]);
+  }
+  return true;
 };
 
