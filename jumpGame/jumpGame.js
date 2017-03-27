@@ -11,6 +11,8 @@
 
 // A = [3,2,1,0,4], return false.
 
+//credit: LeetCode
+
 var canJump = function(array) {
   var jumpTrack = 0;
   for (var i = 0; i < array.length; i++) {
