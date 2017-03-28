@@ -7,6 +7,8 @@
 
 // A valid IP address must be in the form of xxx.xxx.xxx.xxx, where xxx is a number from 0-255. 
 
+// Prompt Credit: LeetCode
+
 var restoreIpAddresses = function(string) {
 
 };
