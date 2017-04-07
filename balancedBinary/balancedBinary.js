@@ -45,7 +45,59 @@ BinaryTree.prototype.contains = function(value) {
   }
 };
 
-
+// Option 1: Recursive solution
 BinaryTree.prototype.checkBalanced = function() {
-  console.log('yay');
+  // store object with depths
+
+  var depths = {};
+
+  var currTree = this;
+
+  // write function to recurse through tree 
+  var recurseTree = function(depth, tree) {
+
+    // if length of depth is greater than 2
+    if (Object.keys(depths).length > 2) {
+      // return false
+      return false;
+    }
+
+    // check to see if leaf
+    if (!tree.right && !tree.left) {
+      // add depth to depths object
+      depths[depth] = depth;
+      return;
+    } else {
+      // if left exists 
+      if (tree.left) {
+        // recurseTree on left with curr depth + 1
+        recurseTree(depth + 1, tree.left);
+      }
+      // if right exists
+      if (tree.right) {
+        // recurseTree on right with curr depth + 1
+        recurseTree(depth + 1, tree.right);
+      }
+    }
+  }
+
+  // initialize recurse function
+  recurseTree(0, currTree);
+
+  // if length of depth is 1
+  if (Object.keys(depths).length === 1) {
+    // return true
+    return true;
+  }
+
+  // if the diff between 2 keys is only 1
+  for (var key in depths) {
+    if (depths[parseInt(key) + 1] || depths[parseInt(key) - 1]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
+
+
